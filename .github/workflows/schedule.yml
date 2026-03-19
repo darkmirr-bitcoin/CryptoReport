@@ -1,0 +1,35 @@
+name: Daily Crypto Report Update
+
+on:
+  schedule:
+    # UTC 시간 기준 0시 0분 (한국 시간 KST 오전 9시 0분에 해당)
+    - cron: '0 0 * * *'
+  workflow_dispatch: # 깃허브 웹에서 수동으로 테스트 실행할 수 있게 해주는 버튼
+
+jobs:
+  update-sheet:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 저장소 코드 가져오기
+      uses: actions/checkout@v3
+
+    - name: 파이썬 환경 설정
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12' 
+
+    - name: 패키지 설치
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: 구글 시크릿 키 파일 생성
+      env:
+        GCP_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
+      run: |
+        echo "$GCP_CREDENTIALS" > secrets.json
+
+    - name: 메인 스크립트 실행
+      run: |
+        python main.py
