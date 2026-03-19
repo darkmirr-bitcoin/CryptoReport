@@ -37,11 +37,16 @@ jobs:
       run: |
         python main.py
 
-    # [추가됨 ✨] 새로 생성된 리포트 폴더를 깃허브에 자동 커밋 & 푸시
+  # [수정됨 ✨] 폴더가 없을 때 에러가 나지 않도록 예외 처리 추가
     - name: 생성된 리포트 깃허브에 커밋 및 푸시
       run: |
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
-        git add reports/
-        # 변경사항이 있을 때만 커밋하도록 예외 처리 (에러 방지)
-        git diff --quiet && git diff --staged --quiet || (git commit -m "📝 일일 암호화폐 AI 리포트 자동 생성" && git push)
+        
+        # reports 폴더가 존재하는 경우에만 git에 추가하고 커밋
+        if [ -d "reports" ]; then
+          git add reports/
+          git diff --quiet && git diff --staged --quiet || (git commit -m "📝 일일 암호화폐 AI 리포트 자동 생성" && git push)
+        else
+          echo "📭 생성된 리포트가 없으므로 커밋을 건너뜁니다."
+        fi
