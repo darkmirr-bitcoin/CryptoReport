@@ -2,15 +2,16 @@ name: Daily Crypto Report Update
 
 on:
   schedule:
-    - cron: '0 0 * * *' # 매일 아침 9시 (KST)
-  workflow_dispatch:
+    # UTC 시간 기준 0시 0분 (한국 시간 KST 오전 9시 0분에 해당)
+    - cron: '0 0 * * *'
+  workflow_dispatch: # 수동 실행 버튼
 
-# [추가됨 ✨] 깃허브 봇이 저장소에 파일을 쓸 수 있도록 권한 부여
+# 깃허브 봇이 저장소에 파일을 쓸 수 있도록 권한 부여
 permissions:
   contents: write
 
 jobs:
-  update-sheet:
+  update-sheet-and-report:
     runs-on: ubuntu-latest
 
     steps:
@@ -37,7 +38,6 @@ jobs:
       run: |
         python main.py
 
-  # [수정됨 ✨] 폴더가 없을 때 에러가 나지 않도록 예외 처리 추가
     - name: 생성된 리포트 깃허브에 커밋 및 푸시
       run: |
         git config --global user.name "github-actions[bot]"
@@ -45,8 +45,8 @@ jobs:
         
         # reports 폴더가 존재하는 경우에만 git에 추가하고 커밋
         if [ -d "reports" ]; then
-          git add reports/
-          git diff --quiet && git diff --staged --quiet || (git commit -m "📝 일일 암호화폐 AI 리포트 자동 생성" && git push)
+          git add reports/ index.html style.scss
+          git diff --quiet && git diff --staged --quiet || (git commit -m "📝 일일 암호화폐 AI 리포트 및 웹페이지 자동 생성" && git push)
         else
           echo "📭 생성된 리포트가 없으므로 커밋을 건너뜁니다."
         fi
