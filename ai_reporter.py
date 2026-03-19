@@ -85,10 +85,10 @@ def extract_score(ai_text):
 
 def generate_final_report(good_reports):
     """
-    80점 이상 코인들의 리포트를 모아서 reports 폴더 내에 md 파일로 저장
+    75점 이상 코인들의 리포트를 모아서 reports 폴더 내에 md 파일로 저장
     """
     if not good_reports:
-        print("📭 오늘 80점 이상인 코인이 없습니다. 리포트를 생성하지 않습니다.")
+        print("📭 오늘 75점 이상인 코인이 없습니다. 리포트를 생성하지 않습니다.")
         return
 
     # reports 폴더가 없으면 자동 생성
@@ -96,13 +96,12 @@ def generate_final_report(good_reports):
     os.makedirs(report_dir, exist_ok=True)
 
     date_str = datetime.now().strftime("%Y-%m-%d")
-    # 확장자를 .md로 변경하고 경로 설정
     filename = os.path.join(report_dir, f"Crypto_Report_{date_str}.md")
     
-    # 마크다운 메인 헤더
-    report_content = f"# 🔥 오늘의 암호화폐 투자 하이라이트 (80점 이상) - {date_str}\n\n"
+    # 마크다운 메인 헤더 (75점으로 텍스트 수정)
+    report_content = f"# 🔥 오늘의 암호화폐 투자 하이라이트 (75점 이상) - {date_str}\n\n"
     report_content += "---\n\n"
-    report_content += "\n\n---\n\n".join(good_reports) # 리포트 사이를 구분선으로 분리
+    report_content += "\n\n---\n\n".join(good_reports) 
     
     with open(filename, "w", encoding="utf-8") as f:
         f.write(report_content)
