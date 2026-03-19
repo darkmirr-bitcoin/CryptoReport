@@ -24,7 +24,7 @@ def format_number(val):
         return f"{val:,.6f}"
 
 def fetch_crypto_analysis(ticker):
-    exchange = ccxt.binance()
+    exchange = ccxt.bybit() # <- 이걸로 딱 한 글자만 바꿔줘!
     ohlcv = exchange.fetch_ohlcv(ticker, timeframe='1d', limit=150)
     
     df = pd.DataFrame(ohlcv, columns=['datetime', 'open', 'high', 'low', 'close', 'volume'])
