@@ -25,6 +25,7 @@ if __name__ == "__main__":
     else:
         print("\n⚠️ 수집된 데이터가 없어 시트 업데이트를 건너뜁니다.")
 
+ # ... (위쪽 코드는 동일) ...
     print("\n🧠 Gemini AI 종합 분석 및 뉴스 검색 시작...")
     for data_row in all_results:
         ticker_display = data_row[1] 
@@ -33,11 +34,17 @@ if __name__ == "__main__":
         score = extract_score(ai_report_text)
         print(f"   => [{ticker_display}] 분석 완료 - AI 점수: {score}점")
         
-        if score >= 80:
+        # [수정된 부분] 기준점수를 75점으로 낮춤!
+        if score >= 75:
              try:
-                 # 메인 텍스트 영역만 잘라오기 ("---" 구분자 사용)
-                 clean_report = ai_report_text.split("---")[2].strip()
-                 # 마크다운 서식으로 리스트에 추가
+                 # AI가 '---'를 빼먹고 답변할 때를 대비해 더 안전하게 코멘트를 가져옴
+                 parts = ai_report_text.split("---")
+                 if len(parts) >= 3:
+                     clean_report = parts[2].strip()
+                 else:
+                     clean_report = ai_report_text.replace(f"SCORE: {score}", "").strip()
+                 
+                 # 마크다운 서식으로 리스트에 추가 (AI 종합 분석 코멘트 포함)
                  high_score_reports.append(f"## 🏆 {ticker_display} (AI 점수: **{score}/100**)\n\n{clean_report}")
              except Exception as e:
                  print(f"   ⚠️ 리포트 파싱 오류: {e}")
