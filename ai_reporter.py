@@ -155,28 +155,31 @@ def generate_final_report(market_overview, good_reports, fng_data, mvrvz_data):
     else:
         report_content += "\n\n---\n\n".join(good_reports)
 
-    # 1. MD 파일 저장 (reports 폴더 안에는 오직 MD만!)
+    # 1. MD 파일 저장 (reports 폴더 안에는 MD만!)
     with open(md_filename, "w", encoding="utf-8") as f:
         f.write(report_content)
     print(f"📂 MD 리포트 생성 완료: {md_filename}")
 
-    # 2. SCSS 컴파일 (최상위 폴더에 style.css 저장)
+    # 2. SCSS 컴파일 (따로 파일로 빼지 않고 변수에만 담기 ✨)
+    compiled_css = ""
     if os.path.exists("style.scss"):
         compiled_css = sass.compile(filename="style.scss")
-        with open("style.css", "w", encoding="utf-8") as f:
-            f.write(compiled_css)
     else:
         print("⚠️ style.scss 파일이 없습니다. 기본 스타일로 진행합니다.")
 
     # 3. MD 내용을 HTML로 변환
     html_body = markdown.markdown(report_content, extensions=['tables'])
+    
+    # 4. [핵심 수정 ✨] HTML 안에 CSS를 통째로 박아 넣음
     html_content = f"""<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crypto Report - {date_str}</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+    {compiled_css}
+    </style>
 </head>
 <body>
     <div class="container">
@@ -185,7 +188,7 @@ def generate_final_report(market_overview, good_reports, fng_data, mvrvz_data):
 </body>
 </html>"""
 
-    # 4. [수정됨] 개별 날짜 HTML 생성 삭제! 오직 루트 폴더에 index.html만 덮어쓰기
+    # 5. 루트 폴더에 index.html 덮어쓰기
     with open("index.html", "w", encoding="utf-8") as f:
         f.write(html_content)
-    print("📄 웹 배포용 메인 index.html 생성 완료!")
+    print("📄 웹 배포용 메인 index.html 생성 완료 (디자인 내장 완료)!")
