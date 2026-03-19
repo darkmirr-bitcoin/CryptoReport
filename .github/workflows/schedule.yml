@@ -2,9 +2,12 @@ name: Daily Crypto Report Update
 
 on:
   schedule:
-    # UTC 시간 기준 0시 0분 (한국 시간 KST 오전 9시 0분에 해당)
-    - cron: '0 0 * * *'
-  workflow_dispatch: # 깃허브 웹에서 수동으로 테스트 실행할 수 있게 해주는 버튼
+    - cron: '0 0 * * *' # 매일 아침 9시 (KST)
+  workflow_dispatch:
+
+# [추가됨 ✨] 깃허브 봇이 저장소에 파일을 쓸 수 있도록 권한 부여
+permissions:
+  contents: write
 
 jobs:
   update-sheet:
@@ -30,6 +33,15 @@ jobs:
       run: |
         echo "$GCP_CREDENTIALS" > secrets.json
 
-    - name: 메인 스크립트 실행
+    - name: 메인 스크립트 실행 (데이터 수집 및 리포트 생성)
       run: |
         python main.py
+
+    # [추가됨 ✨] 새로 생성된 리포트 폴더를 깃허브에 자동 커밋 & 푸시
+    - name: 생성된 리포트 깃허브에 커밋 및 푸시
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git add reports/
+        # 변경사항이 있을 때만 커밋하도록 예외 처리 (에러 방지)
+        git diff --quiet && git diff --staged --quiet || (git commit -m "📝 일일 암호화폐 AI 리포트 자동 생성" && git push)
