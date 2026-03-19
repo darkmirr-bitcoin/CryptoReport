@@ -191,3 +191,6 @@ def generate_final_report(market_overview, good_reports, fng_data, mvrvz_data):
     with open(html_filename, "w", encoding="utf-8") as f:
         f.write(html_content)
     print(f"📄 HTML 리포트 생성 완료: {html_filename}")
+    # [여기에 추가 ✨] 메인 화면용으로 최상위 폴더에 index.html 복사본 생성
+    with open("index.html", "w", encoding="utf-8") as f:
+        f.write(html_content)
