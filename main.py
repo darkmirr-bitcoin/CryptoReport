@@ -30,7 +30,8 @@ if __name__ == "__main__":
     for data_row in all_results:
         ticker_display = data_row[1] 
         
-        ai_report_text = analyze_with_gemini(ticker_display, data_row)
+        # 맨 앞에 'client, ' 를 추가해줘!
+        ai_report_text = analyze_with_gemini(client, ticker_display, data_row)
         score = extract_score(ai_report_text)
         print(f"   => [{ticker_display}] 분석 완료 - AI 점수: {score}점")
         
