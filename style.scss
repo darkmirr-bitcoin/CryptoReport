@@ -1,61 +1,142 @@
-$bg-color: #0d1117;
-$text-color: #c9d1d9;
-$accent-color: #58a6ff;
-$border-color: #30363d;
-$container-bg: #161b22;
+/* 프리미엄 퀀트 리포트 스타일링 */
+$bg-body: #0a0e14; /* 아주 깊은 밤하늘색 */
+$bg-container: #10151f; /* 컨테이너 배경 */
+$text-main: #e1e7f0; /* 메인 글씨색 */
+$text-muted: #8b9bb4; /* 흐린 글씨색 */
+$accent-primary: #58a6ff; /* 메인 포인트 블루 */
+$accent-neon: #00f2fe; /* 네온 아쿠아 블루 */
+$border-color: #212836; /* 경계선색 */
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-    background-color: $bg-color;
-    color: $text-color;
-    line-height: 1.6;
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: $bg-body;
+    color: $text-main;
+    line-height: 1.7;
     margin: 0;
     padding: 20px;
+    display: flex;
+    justify-content: center;
 }
 
 .container {
-    max-width: 800px;
-    margin: 0 auto;
-    background-color: $container-bg;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    max-width: 900px;
+    width: 100%;
+    background-color: $bg-container;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
     border: 1px solid $border-color;
 }
 
-h1, h2, h3 {
-    color: $accent-color;
-    border-bottom: 1px solid $border-color;
-    padding-bottom: 5px;
+h1 {
+    font-size: 2.5rem;
+    color: $accent-primary;
+    border-bottom: 2px solid $border-color;
+    padding-bottom: 15px;
+    margin-bottom: 30px;
+    text-shadow: 0 0 10px rgba(88, 166, 255, 0.5);
+}
+
+h2 {
+    font-size: 1.8rem;
+    color: $text-main;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+h3 {
+    font-size: 1.4rem;
+    color: $accent-neon;
+    margin-top: 25px;
+    margin-bottom: 15px;
+}
+
+h4 {
+    font-size: 1.1rem;
+    color: $text-main;
+    margin-top: 20px;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
-    margin: 20px 0;
+    margin: 25px 0;
+    font-size: 1rem;
+    background-color: rgba(255, 255, 255, 0.02);
+    border-radius: 8px;
+    overflow: hidden;
 
     th, td {
-        padding: 12px;
+        padding: 16px;
         border: 1px solid $border-color;
         text-align: left;
     }
 
     th {
-        background-color: lighten($container-bg, 5%);
-        color: $accent-color;
+        background-color: rgba(88, 166, 255, 0.1);
+        color: $accent-primary;
+        font-weight: 600;
+    }
+
+    td {
+        color: $text-main;
+    }
+
+    tr:last-child td {
+        border-bottom: none;
     }
 }
 
 blockquote {
-    border-left: 4px solid $accent-color;
-    margin: 0;
-    padding-left: 15px;
-    color: darken($text-color, 15%);
+    border-left: 4px solid $accent-neon;
+    margin: 20px 0;
+    padding: 15px 25px;
+    background-color: rgba(0, 242, 254, 0.03);
+    border-radius: 4px;
+    font-size: 1.1rem;
+    color: $text-main;
     font-style: italic;
+    
+    > * {
+        margin: 0;
+    }
+    
+    h3 {
+        color: $accent-neon;
+        font-style: normal;
+        margin-bottom: 10px;
+        border: none;
+        padding: 0;
+    }
 }
 
 hr {
     border: 0;
     border-top: 1px solid $border-color;
-    margin: 30px 0;
+    margin: 40px 0;
+}
+
+ul, ol {
+    padding-left: 20px;
+    color: $text-muted;
+    
+    li {
+        margin-bottom: 10px;
+        
+        strong {
+            color: $accent-primary;
+        }
+    }
+}
+
+code {
+    font-family: 'Fira Code', monospace;
+    background-color: rgba(88, 166, 255, 0.1);
+    color: $accent-primary;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.9em;
 }
