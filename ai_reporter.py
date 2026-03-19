@@ -132,16 +132,13 @@ def extract_score(ai_text):
     return 0
 
 def generate_final_report(market_overview, good_reports, fng_data, mvrvz_data):
-    # [수정됨 ✨] 코인이 없어도 종료(return)하지 않고 무조건 리포트 생성 로직으로 넘어감
-
     report_dir = "reports"
     os.makedirs(report_dir, exist_ok=True)
 
     date_str = datetime.now().strftime("%Y-%m-%d")
     md_filename = os.path.join(report_dir, f"Crypto_Report_{date_str}.md")
-    html_filename = os.path.join(report_dir, f"Crypto_Report_{date_str}.html")
     
-    # 마크다운 뼈대 만들기 (이 부분은 코인 유무와 상관없이 항상 들어감)
+    # 마크다운 뼈대 만들기
     report_content = f"# 🔥 오늘의 암호화폐 투자 하이라이트 - {date_str}\n\n"
     report_content += "---\n\n"
     report_content += "## 📈 시장 주요 지표\n"
@@ -152,19 +149,18 @@ def generate_final_report(market_overview, good_reports, fng_data, mvrvz_data):
     report_content += market_overview + "\n\n---\n\n"
     report_content += "## 🏆 오늘의 추천 코인 (AI 점수 75점 이상)\n\n"
 
-    # 코인이 없을 때와 있을 때 분기 처리
     if not good_reports:
         report_content += "> **오늘은 AI 분석 결과 75점을 넘는 추천 코인이 없습니다. 무리한 투자보다는 시장을 관망하는 것을 추천합니다.**\n"
         print("📭 75점 이상 코인이 없지만, 시황 대시보드 리포트를 생성합니다.")
     else:
         report_content += "\n\n---\n\n".join(good_reports)
 
-    # 1. MD 파일 저장
+    # 1. MD 파일 저장 (reports 폴더 안에는 오직 MD만!)
     with open(md_filename, "w", encoding="utf-8") as f:
         f.write(report_content)
     print(f"📂 MD 리포트 생성 완료: {md_filename}")
 
-    # 2. SCSS를 CSS로 컴파일해서 최상위 폴더에 저장 (index.html이 읽을 수 있게)
+    # 2. SCSS 컴파일 (최상위 폴더에 style.css 저장)
     if os.path.exists("style.scss"):
         compiled_css = sass.compile(filename="style.scss")
         with open("style.css", "w", encoding="utf-8") as f:
@@ -189,11 +185,7 @@ def generate_final_report(market_overview, good_reports, fng_data, mvrvz_data):
 </body>
 </html>"""
 
-    # 4. 개별 날짜용 HTML 저장
-    with open(html_filename, "w", encoding="utf-8") as f:
-        f.write(html_content)
-    
-    # 5. [깃허브 페이지용] 최상위 폴더에 무조건 index.html 덮어쓰기
+    # 4. [수정됨] 개별 날짜 HTML 생성 삭제! 오직 루트 폴더에 index.html만 덮어쓰기
     with open("index.html", "w", encoding="utf-8") as f:
         f.write(html_content)
-    print("📄 웹 배포용 index.html 생성 완료!")
+    print("📄 웹 배포용 메인 index.html 생성 완료!")
