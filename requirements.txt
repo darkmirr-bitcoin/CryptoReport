@@ -3,3 +3,4 @@ pandas
 pandas-ta
 gspread
 oauth2client
+google-genai
