@@ -43,10 +43,10 @@ jobs:
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
         
-       # reports 폴더(MD만 있음)와 최상위 웹 파일들을 같이 커밋
+        # reports 폴더와 웹 배포용 파일(index.html, style.scss)만 커밋
         if [ -d "reports" ]; then
-          git add reports/ index.html style.scss style.css
-          git diff --quiet && git diff --staged --quiet || (git commit -m "📝 일일 리포트 및 웹페이지 업데이트" && git push)
+          git add reports/ index.html style.scss
+          git diff --quiet && git diff --staged --quiet || (git commit -m "📝 일일 암호화폐 AI 리포트 및 웹페이지 자동 생성" && git push)
         else
           echo "📭 생성된 리포트가 없으므로 커밋을 건너뜁니다."
         fi
