@@ -1,6 +1,8 @@
 import json
 import os
 import requests
+import markdown  # HTML 변환용
+import sass      # SCSS 컴파일용
 from google import genai
 from google.genai import types
 from datetime import datetime
@@ -130,6 +132,62 @@ def extract_score(ai_text):
     return 0
 
 def generate_final_report(market_overview, good_reports, fng_data, mvrvz_data):
+    report_dir = "reports"
+    os.makedirs(report_dir, exist_ok=True)
+
+    date_str = datetime.now().strftime("%Y-%m-%d")
+    md_filename = os.path.join(report_dir, f"Crypto_Report_{date_str}.md")
+    html_filename = os.path.join(report_dir, f"Crypto_Report_{date_str}.html")
+    css_filename = os.path.join(report_dir, "style.css")
+
+    # 마크다운 내용 구성
+    report_content = f"# 🔥 오늘의 암호화폐 투자 하이라이트 - {date_str}\n\n"
+    report_content += "---\n\n"
+    report_content += "## 📈 시장 주요 지표\n"
+    report_content += f"| 지표명 | 현재 상태 |\n| :--- | :--- |\n"
+    report_content += f"| **크립토 공포탐욕지수** | `{fng_data}` |\n"
+    report_content += f"| **비트코인 MVRV Z-Score** | `{mvrvz_data}` |\n\n"
+    report_content += "## 🌐 AI 종합 시황 분석\n"
+    report_content += market_overview + "\n\n---\n\n"
+    report_content += "## 🏆 오늘의 추천 코인 (AI 점수 75점 이상)\n\n"
+
+    # [수정됨] 추천 코인이 없을 때 빈 폴더로 남기지 않고 메시지를 추가
     if not good_reports:
-        print("📭 오늘 75점 이상인 코인이 없습니다. 리포트를 생성하지 않습니다.")
-        return
+        report_content += "> **오늘은 AI 분석 결과 75점을 넘는 추천 코인이 없어. 현재는 관망하는 것을 추천해.**\n"
+    else:
+        report_content += "\n\n---\n\n".join(good_reports)
+
+    # 1. MD 파일 저장
+    with open(md_filename, "w", encoding="utf-8") as f:
+        f.write(report_content)
+    print(f"📂 MD 리포트 생성 완료: {md_filename}")
+
+    # 2. SCSS를 CSS로 컴파일해서 저장
+    if os.path.exists("style.scss"):
+        compiled_css = sass.compile(filename="style.scss")
+        with open(css_filename, "w", encoding="utf-8") as f:
+            f.write(compiled_css)
+    else:
+        print("⚠️ style.scss 파일이 없습니다.")
+
+    # 3. MD 내용을 HTML로 변환 (테이블 서식 적용)
+    html_body = markdown.markdown(report_content, extensions=['tables'])
+    html_content = f"""<!DOCTYPE html>
+    <html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Crypto Report - {date_str}</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div class="container">
+            {html_body}
+        </div>
+    </body>
+    </html>"""
+
+    # 4. HTML 파일 저장
+    with open(html_filename, "w", encoding="utf-8") as f:
+        f.write(html_content)
+    print(f"📄 HTML 리포트 생성 완료: {html_filename}")
