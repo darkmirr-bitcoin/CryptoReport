@@ -44,7 +44,9 @@ def fetch_mvrv_z_score(client):
 
 def analyze_market_overview(client, indicators):
     print("   📰 외신(Yahoo Finance 등) 기반 시황 요약 중...")
-    # 이전 제미나이 호출(MVRV 검색) 직후라 API 제한 안 걸리게 3초 쉬어주기
+    
+    # 이전 제미나이 호출 직후라 API 제한 안 걸리게 3초 쉬어주기
+    import time
     time.sleep(3)
     
     prompt = f"""
@@ -67,7 +69,7 @@ def analyze_market_overview(client, indicators):
     #### 📍 핵심 시장 드라이버 및 뉴스 분석
     - ...
     """
-  try:
+    try:
         response = client.models.generate_content(
             model=MODEL_ID,
             contents=prompt,
@@ -77,10 +79,9 @@ def analyze_market_overview(client, indicators):
         )
         return response.text
     except Exception as e:
-        # 터미널에 진짜 에러가 뭔지 빨간 글씨로 뱉게 만듦!
-        print(f"   ❌ 시황 분석 API 에러 발생: {e}") 
+        print(f"   ❌ 시황 분석 API 에러 발생: {e}")
         return f"시황 분석 데이터를 가져오지 못했습니다. (원인: {e})"
-
+        
 def analyze_with_gemini(client, ticker_display, data_row):
     current_price = data_row[2]
     trend = data_row[4]
