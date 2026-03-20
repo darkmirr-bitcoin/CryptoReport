@@ -2,11 +2,10 @@ name: Daily Crypto Report Update
 
 on:
   schedule:
-    # UTC 시간 기준 0시 0분 (한국 시간 KST 오전 9시 0분에 해당)
-    - cron: '0 0 * * *'
+    # 깃허브 서버 병목을 피하기 위해 오전 9시 정각 대신 9시 15분(KST)으로 설정
+    - cron: '15 0 * * *'
   workflow_dispatch: # 수동 실행 버튼
 
-# 깃허브 봇이 저장소에 파일을 쓸 수 있도록 권한 부여
 permissions:
   contents: write
 
@@ -43,7 +42,6 @@ jobs:
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
         
-        # reports 폴더와 웹 배포용 파일(index.html, style.scss)만 커밋
         if [ -d "reports" ]; then
           git add reports/ index.html style.scss
           git diff --quiet && git diff --staged --quiet || (git commit -m "📝 일일 암호화폐 AI 리포트 및 웹페이지 자동 생성" && git push)
