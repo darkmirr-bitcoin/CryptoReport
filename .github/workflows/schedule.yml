@@ -33,7 +33,10 @@ jobs:
       run: |
         echo "$GCP_CREDENTIALS" > secrets.json
 
-    - name: 메인 스크립트 실행 (데이터 수집 및 리포트 생성)
+    - name: 메인 스크립트 실행 (데이터 수집, 리포트 생성, 텔레그램 전송)
+      env:
+        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
       run: |
         python main.py
 
