@@ -45,7 +45,6 @@ def fetch_mvrv_z_score(client):
 def analyze_market_overview(client, indicators):
     print("   📰 외신(Yahoo Finance 등) 기반 시황 요약 중...")
     
-    # 이전 제미나이 호출 직후라 API 제한 안 걸리게 3초 쉬어주기
     import time
     time.sleep(3)
     
@@ -62,7 +61,12 @@ def analyze_market_overview(client, indicators):
     2. 핵심 드라이버 (주요 뉴스 3): 시장에 가장 큰 영향을 미친 뉴스를 야후 파이낸스 등을 인용하여 3가지 요약하세요.
     3. 지표 해석: 공포탐욕지수와 MVRV Z-Score를 바탕으로 현재 시장 위치를 분석하세요.
 
-    [출력 형식] - 마크다운
+    [출력 형식 및 엄격한 주의사항]
+    - 마크다운 형식으로 작성하세요.
+    - ⚠️ 중요: "알겠습니다", "분석해 드리겠습니다", "전략가로서~" 같은 인사말이나 서론은 절대 쓰지 마세요. 
+    - 오직 아래의 [출력 템플릿]에 맞는 팩트 기반의 리포트 본문만 곧바로 출력하세요.
+
+    [출력 템플릿]
     ### 🌐 오늘의 암호화폐 시황 총평
     > ...
 
