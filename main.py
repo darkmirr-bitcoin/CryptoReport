@@ -6,6 +6,7 @@ from ai_reporter import (
     generate_final_report, fetch_fear_and_greed, fetch_mvrv_z_score, analyze_market_overview
 )
 from google import genai
+from telegram_notifier import send_mobile_summary 
 
 if __name__ == "__main__":
     print("🚀 암호화폐 분석 파이프라인 가동 시작!\n")
@@ -66,5 +67,9 @@ if __name__ == "__main__":
     # --- 4단계: 리포트 생성 ---
     print("\n4️⃣ 단계: 최종 MD 리포트 생성 중...")
     generate_final_report(market_summary, high_score_reports, fng_value, mvrv_value)
+
+    # [새로 추가된 부분 ✨] 텔레그램으로 요약본 쏘기
+    print("5️⃣ 단계: 텔레그램 모바일 알림 전송 중...")
+    send_mobile_summary(fng_value, mvrv_value, high_score_reports)
     
     print("\n✅ 모든 과정 완료!")
