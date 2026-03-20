@@ -1,11 +1,11 @@
-/* 프리미엄 퀀트 리포트 스타일링 */
-$bg-body: #0a0e14; /* 아주 깊은 밤하늘색 */
-$bg-container: #10151f; /* 컨테이너 배경 */
-$text-main: #e1e7f0; /* 메인 글씨색 */
-$text-muted: #8b9bb4; /* 흐린 글씨색 */
-$accent-primary: #58a6ff; /* 메인 포인트 블루 */
-$accent-neon: #00f2fe; /* 네온 아쿠아 블루 */
-$border-color: #212836; /* 경계선색 */
+/* 가독성 극대화 프리미엄 다크모드 (블루 제거) */
+$bg-body: #121212; /* 눈이 편안한 깊은 다크 그레이 */
+$bg-container: #1e1e1e; /* 리포트 카드 배경 */
+$text-main: #ffffff; /* 쨍한 흰색 (본문 가독성 최고) */
+$text-muted: #aaaaaa; /* 부연 설명용 회색 */
+$accent-primary: #00e676; /* 형광 민트 (제목 및 강조 포인트) */
+$accent-highlight: #ffea00; /* 포인트 옐로우 (중요 데이터) */
+$border-color: #333333; /* 거슬리지 않는 구분선 */
 
 body {
     font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -23,34 +23,34 @@ body {
     width: 100%;
     background-color: $bg-container;
     padding: 40px;
-    border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8);
     border: 1px solid $border-color;
 }
 
 h1 {
-    font-size: 2.5rem;
-    color: $accent-primary;
+    font-size: 2.2rem;
+    color: $accent-highlight; /* 메인 타이틀은 눈에 확 띄는 노란색 */
     border-bottom: 2px solid $border-color;
     padding-bottom: 15px;
     margin-bottom: 30px;
-    text-shadow: 0 0 10px rgba(88, 166, 255, 0.5);
 }
 
 h2 {
-    font-size: 1.8rem;
-    color: $text-main;
+    font-size: 1.7rem;
+    color: $accent-primary; /* 섹션 타이틀은 산뜻한 민트색 */
     margin-top: 40px;
     margin-bottom: 20px;
     display: flex;
     align-items: center;
-    gap: 10px;
 }
 
 h3 {
-    font-size: 1.4rem;
-    color: $accent-neon;
-    margin-top: 25px;
+    font-size: 1.3rem;
+    color: $text-main;
+    border-left: 4px solid $accent-primary; /* 텍스트는 흰색, 왼쪽 포인트 줄만 민트색 */
+    padding-left: 12px;
+    margin-top: 30px;
     margin-bottom: 15px;
 }
 
@@ -65,7 +65,7 @@ table {
     border-collapse: collapse;
     margin: 25px 0;
     font-size: 1rem;
-    background-color: rgba(255, 255, 255, 0.02);
+    background-color: #252525;
     border-radius: 8px;
     overflow: hidden;
 
@@ -76,40 +76,27 @@ table {
     }
 
     th {
-        background-color: rgba(88, 166, 255, 0.1);
-        color: $accent-primary;
+        background-color: #333333;
+        color: $accent-highlight;
         font-weight: 600;
     }
 
     td {
         color: $text-main;
     }
-
-    tr:last-child td {
-        border-bottom: none;
-    }
 }
 
 blockquote {
-    border-left: 4px solid $accent-neon;
+    border-left: 4px solid $accent-highlight;
     margin: 20px 0;
     padding: 15px 25px;
-    background-color: rgba(0, 242, 254, 0.03);
+    background-color: #2a2a2a;
     border-radius: 4px;
     font-size: 1.1rem;
     color: $text-main;
-    font-style: italic;
     
     > * {
         margin: 0;
-    }
-    
-    h3 {
-        color: $accent-neon;
-        font-style: normal;
-        margin-bottom: 10px;
-        border: none;
-        padding: 0;
     }
 }
 
@@ -121,22 +108,22 @@ hr {
 
 ul, ol {
     padding-left: 20px;
-    color: $text-muted;
+    color: $text-main;
     
     li {
         margin-bottom: 10px;
         
         strong {
-            color: $accent-primary;
+            color: $accent-primary; /* 본문 강조 텍스트는 민트색 */
         }
     }
 }
 
 code {
     font-family: 'Fira Code', monospace;
-    background-color: rgba(88, 166, 255, 0.1);
-    color: $accent-primary;
-    padding: 2px 6px;
+    background-color: #333333;
+    color: $accent-highlight;
+    padding: 3px 6px;
     border-radius: 4px;
     font-size: 0.9em;
 }
