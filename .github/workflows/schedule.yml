@@ -2,8 +2,8 @@ name: Daily Crypto Report Update
 
 on:
   schedule:
-    # 깃허브 서버 병목을 피하기 위해 오전 9시 정각 대신 9시 15분(KST)으로 설정
-    - cron: '3 0 * * *'
+    # 깃허브 서버 병목을 피하기 위해 오전 9시 정각 대신 8시 43분(KST)으로 설정
+    - cron: '43 23 * * *'
   workflow_dispatch: # 수동 실행 버튼
 
 permissions:
