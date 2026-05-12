@@ -160,8 +160,8 @@ def generate_final_report(market_overview, good_reports, fng_data, mvrvz_data):
     report_content += "## 🏆 오늘의 추천 코인 (AI 점수 75점 이상)\n\n"
 
     if not good_reports:
-        report_content += "> **오늘은 AI 분석 결과 75점을 넘는 추천 코인이 없습니다. 무리한 투자보다는 시장을 관망하는 것을 추천합니다.**\n"
-        print("📭 75점 이상 코인이 없지만, 시황 대시보드 리포트를 생성합니다.")
+        report_content += "> **오늘은 AI 분석 결과 80점을 넘는 추천 코인이 없습니다. 무리한 투자보다는 시장을 관망하는 것을 추천합니다.**\n"
+        print("📭 80점 이상 코인이 없지만, 시황 대시보드 리포트를 생성합니다.")
     else:
         report_content += "\n\n---\n\n".join(good_reports)
 
