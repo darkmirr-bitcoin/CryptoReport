@@ -15,7 +15,7 @@ def send_mobile_summary(fng_data, mvrvz_data, good_reports):
     text += f"• 공포탐욕지수: `{fng_data}`\n"
     text += f"• MVRV Z-Score: `{mvrvz_data}`\n\n"
     
-    text += f"🏆 *추천 코인 (75점 이상)*\n"
+    text += f"🏆 *추천 코인 (80점 이상)*\n"
     if not good_reports:
         text += "오늘은 추천 코인이 없어. 관망장이야! ☕️\n"
     else:
