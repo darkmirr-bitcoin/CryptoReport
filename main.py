@@ -50,7 +50,7 @@ if __name__ == "__main__":
         score = extract_score(ai_report_text)
         print(f"   => [{ticker_display}] 분석 완료 - AI 점수: {score}점")
         
-        if score >= 75:
+        if score >= 80:
              try:
                  parts = ai_report_text.split("---")
                  if len(parts) >= 3:
