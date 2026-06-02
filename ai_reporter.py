@@ -12,7 +12,7 @@ with open("secrets.json", "r") as f:
     secrets = json.load(f)
 GEMINI_API_KEY = secrets.get("gemini_api_key")
 
-MODEL_ID = "gemini-2.0-flash"
+MODEL_ID = "gemini-2.5-flash"
 
 def fetch_fear_and_greed():
     print("   📊 공포탐욕지수 가져오는 중...")
